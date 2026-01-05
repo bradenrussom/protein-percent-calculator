@@ -1,5 +1,6 @@
 import streamlit as st
 import json
+from pathlib import Path
 
 # Load configuration
 with open('config.json', 'r') as f:
@@ -24,6 +25,11 @@ st.markdown("""
     body {
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         line-height: 1.6;
+        background-color: #f8fafb;
+    }
+    
+    [data-testid="stAppViewContainer"] {
+        background-color: #f8fafb;
     }
     
     .header-section {
@@ -35,6 +41,7 @@ st.markdown("""
     .header-section h1 {
         margin-bottom: 1rem;
         font-size: 2.5rem;
+        color: #1a1a1a;
     }
     
     .header-section p {
@@ -43,7 +50,47 @@ st.markdown("""
         color: #333;
     }
     
-    .header-section a {
+    .author-bio {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin: 1.5rem 0 2rem 0;
+        padding: 1rem;
+        background-color: #ffffff;
+        border-radius: 8px;
+        border: 1px solid #e0e0e0;
+    }
+    
+    .author-photo {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        object-fit: cover;
+        flex-shrink: 0;
+    }
+    
+    .author-info {
+        flex: 1;
+    }
+    
+    .author-info p {
+        margin: 0;
+        font-size: 0.9rem;
+        color: #333;
+        font-weight: 500;
+    }
+    
+    .author-info a {
+        color: #1da1f2;
+        text-decoration: none;
+        font-weight: 600;
+    }
+    
+    .author-info a:hover {
+        text-decoration: underline;
+    }
+    
+    .header-section a.cta-button {
         display: inline-block;
         margin-top: 1rem;
         padding: 0.75rem 1.5rem;
@@ -55,24 +102,28 @@ st.markdown("""
         transition: background-color 0.2s;
     }
     
-    .header-section a:hover {
+    .header-section a.cta-button:hover {
         background-color: #333;
     }
     
     .input-section {
         margin-bottom: 2rem;
+        padding: 1.5rem;
+        background-color: #ffffff;
+        border-radius: 8px;
+        border: 1px solid #e0e0e0;
     }
     
     .results-section {
-        margin-top: 2rem;
+        margin: 2rem 0;
         padding: 2rem;
-        background-color: #f8f9fa;
+        background-color: #ffffff;
         border-radius: 8px;
         border-left: 4px solid #000;
     }
     
     .result-item h3 {
-        font-size: 1rem;
+        font-size: 0.85rem;
         color: #666;
         margin-bottom: 0.5rem;
         text-transform: uppercase;
@@ -86,46 +137,53 @@ st.markdown("""
     }
     
     .instructions {
-        padding: 1.5rem;
-        background-color: #f8f9fa;
+        padding: 2rem;
+        background-color: #ffffff;
         border-radius: 8px;
-        margin-bottom: 2rem;
+        border: 1px solid #e0e0e0;
+        margin-top: 2rem;
     }
     
     .instructions h2 {
         margin-bottom: 1rem;
         font-size: 1.5rem;
+        color: #1a1a1a;
     }
     
     .instructions ol {
         margin-left: 1.5rem;
+        color: #333;
     }
     
     .instructions li {
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.75rem;
+        color: #333;
     }
     
     .instructions img {
         width: 100%;
-        max-width: 300px;
-        margin-top: 1rem;
+        max-width: 400px;
+        margin-top: 1.5rem;
         border-radius: 4px;
+        border: 1px solid #e0e0e0;
     }
     
     .error-message {
-        color: #d32f2f;
+        color: #c41e3a;
         padding: 1rem;
-        background-color: #ffebee;
+        background-color: #fff5f5;
         border-radius: 4px;
         margin-top: 1rem;
+        border-left: 4px solid #c41e3a;
     }
     
     .info-message {
         color: #1976d2;
         padding: 1rem;
-        background-color: #e3f2fd;
+        background-color: #f0f8ff;
         border-radius: 4px;
         margin-top: 1rem;
+        border-left: 4px solid #1976d2;
     }
     
     @media (max-width: 768px) {
@@ -140,36 +198,59 @@ st.markdown("""
         .results-section {
             padding: 1.5rem;
         }
+        
+        .author-bio {
+            flex-direction: column;
+            text-align: center;
+        }
+        
+        .author-photo {
+            width: 80px;
+            height: 80px;
+        }
     }
 </style>
 """, unsafe_allow_html=True)
 
-# Header with branding and CTA
+# Header with branding
 st.markdown("""
 <div class="header-section">
-    <h1>Get the Truth about High Protein Foods</h1>
-    <p>Use this calculator to find out whether a food is actually high in protein or just marketed that way.</p>
-    <p>By the way, I'm a marketer who lost 30+ lbs on my own terms. I teach people how to see through ads, track what works, and lose weight your way.</p>
-    <p>And if you like this calculator, you'll love my other stuff. Follow me on X to graduate from weight loss programs forever.</p>
-    <a href="https://x.com/bradenrrussom" target="_blank">Graduate Forever  👉</a>
+    <h1>High in Protein or High in Marketing?</h1>
+    <p>Is that food high in protein, or just marketed that way?</p>
+    <p>I'm a marketer who spent 15 years writing convincing ads. Then I lost 30+ lbs leaving the marketing behind and looking at the truth underneath all the hype.</p>
+	<p>This calculator helps you see through the hype, too.</p>
+	<p> <a href="https://x.com/bradenrrussom" target="_blank">Follow me on X</a> if you’re done with all the hype around weight loss and ready to find what <em>actually</em> works.</p>    
+    <a href="https://x.com/bradenrrussom" target="_blank" class="cta-button">See Through the Hype 👉</a>
 </div>
 """, unsafe_allow_html=True)
 
-# Create responsive two-column layout
-col_input, col_instructions = st.columns([1, 1], gap="medium")
+# Author bio with photo
+if Path('bradenrussomheadshot.jpg').exists():
+    st.markdown("""
+    <div class="author-bio">
+        <img src="bradenrussomheadshot.jpg" alt="Braden Russom" class="author-photo">
+        <div class="author-info">
+            <p><strong>Built by Braden Russom</strong></p>
+            <p><a href="https://x.com/bradenrrussom" target="_blank">@bradenrrussom</a></p>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
-# Left column: Input fields
-with col_input:
-    st.markdown("<div class='input-section'>", unsafe_allow_html=True)
-    
+# Input section
+st.markdown("<div class='input-section'>", unsafe_allow_html=True)
+
+col1, col2 = st.columns(2)
+
+with col1:
     calories = st.number_input(
         "Calories",
-        min_value=0.0,
-        value=0.0,
-        step=1.0,
+        min_value=0,
+        value=0,
+        step=1,
         help="Enter calories here"
     )
-    
+
+with col2:
     protein = st.number_input(
         "Grams of Protein",
         min_value=0.0,
@@ -177,25 +258,8 @@ with col_input:
         step=1.0,
         help="Enter protein here"
     )
-    
-    st.markdown("</div>", unsafe_allow_html=True)
 
-# Right column: Instructions
-with col_instructions:
-    st.markdown("""
-    <div class="instructions">
-        <h2>Instructions:</h2>
-        <ol>
-            <li>Find the nutrition label on any food</li>
-            <li>Enter the calories in the first field</li>
-            <li>Enter the grams of protein in the second field</li>
-        </ol>
-        <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
-            <strong>Where to find these numbers:</strong><br>
-            Look at the nutrition facts label. Calories are usually at the top, and protein is listed below with other nutrients.
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
+st.markdown("</div>", unsafe_allow_html=True)
 
 # Calculation logic
 if calories > 0 and protein > 0:
@@ -255,3 +319,23 @@ elif (calories > 0 or protein > 0):
         '<div class="info-message">ℹ️ Enter values in both fields to calculate</div>',
         unsafe_allow_html=True
     )
+
+# Instructions section (always visible)
+st.markdown("""
+<div class="instructions">
+    <h2>Instructions:</h2>
+    <ol>
+        <li>Find the nutrition label on any food</li>
+        <li>Enter the calories in the first field</li>
+        <li>Enter the grams of protein in the second field</li>
+    </ol>
+    <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
+        <strong>Where to find these numbers:</strong><br>
+        Look at the nutrition facts label. Calories are usually at the top, and protein is listed below with other nutrients. Here's an example:
+    </p>
+</div>
+""", unsafe_allow_html=True)
+
+# Display nutrition label image if it exists
+if Path('nutrition_label_numbers.jpg').exists():
+    st.image('nutrition_label_numbers.jpg', use_container_width=True)

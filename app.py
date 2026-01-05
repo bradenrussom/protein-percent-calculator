@@ -16,6 +16,7 @@ st.set_page_config(
 # Custom CSS for styling and responsiveness
 st.markdown("""
 <style>
+    /* ============== GENERAL STYLES ============== */
     * {
         margin: 0;
         padding: 0;
@@ -32,6 +33,7 @@ st.markdown("""
         background-color: #f8fafb;
     }
     
+    /* ============== HEADER SECTION ============== */
     .header-section {
         margin-bottom: 2rem;
         padding-bottom: 1.5rem;
@@ -50,46 +52,6 @@ st.markdown("""
         color: #333;
     }
     
-    .author-bio {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        margin: 1.5rem 0 2rem 0;
-        padding: 1rem;
-        background-color: #ffffff;
-        border-radius: 8px;
-        border: 1px solid #e0e0e0;
-    }
-    
-    .author-photo {
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        object-fit: cover;
-        flex-shrink: 0;
-    }
-    
-    .author-info {
-        flex: 1;
-    }
-    
-    .author-info p {
-        margin: 0;
-        font-size: 0.9rem;
-        color: #333;
-        font-weight: 500;
-    }
-    
-    .author-info a {
-        color: #1da1f2;
-        text-decoration: none;
-        font-weight: 600;
-    }
-    
-    .author-info a:hover {
-        text-decoration: underline;
-    }
-    
     .header-section a.cta-button {
         display: inline-block;
         margin-top: 1rem;
@@ -106,6 +68,36 @@ st.markdown("""
         background-color: #333;
     }
     
+    /* ============== AUTHOR BIO SECTION ============== */
+    .author-bio {
+        margin-top: 1.5rem;
+    }
+    
+    .author-photo {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        flex-shrink: 0;
+    }
+    
+    .author-info p {
+        margin: 0;
+        color: #333;
+        font-weight: 500;
+    }
+    
+    .author-info a {
+        color: #1da1f2;
+        text-decoration: none;
+        font-weight: 600;
+    }
+    
+    .author-info a:hover {
+        text-decoration: underline;
+    }
+    
+    /* ============== INPUT SECTION ============== */
     .input-section {
         margin-bottom: 2rem;
         padding: 1.5rem;
@@ -114,6 +106,7 @@ st.markdown("""
         border: 1px solid #e0e0e0;
     }
     
+    /* ============== RESULTS SECTION ============== */
     .results-section {
         margin: 2rem 0;
         padding: 2rem;
@@ -136,6 +129,7 @@ st.markdown("""
         color: #000;
     }
     
+    /* ============== INSTRUCTIONS SECTION ============== */
     .instructions {
         padding: 2rem;
         background-color: #ffffff;
@@ -168,6 +162,7 @@ st.markdown("""
         border: 1px solid #e0e0e0;
     }
     
+    /* ============== MESSAGES (ERROR, INFO) ============== */
     .error-message {
         color: #c41e3a;
         padding: 1rem;
@@ -186,9 +181,23 @@ st.markdown("""
         border-left: 4px solid #1976d2;
     }
     
+    /* ============== RESPONSIVE (MOBILE) ============== */
     @media (max-width: 768px) {
         .header-section h1 {
             font-size: 1.8rem;
+        }
+        
+        .header-section p {
+            font-size: 0.95rem;
+        }
+        
+        .author-photo {
+            width: 70px;
+            height: 70px;
+        }
+        
+        .author-info p {
+            font-size: 0.85rem;
         }
         
         .result-value {
@@ -199,42 +208,42 @@ st.markdown("""
             padding: 1.5rem;
         }
         
-        .author-bio {
-            flex-direction: column;
-            text-align: center;
-        }
-        
-        .author-photo {
-            width: 80px;
-            height: 80px;
+        .instructions {
+            padding: 1.5rem;
         }
     }
 </style>
 """, unsafe_allow_html=True)
 
-# Header with branding
-st.markdown("""
-<div class="header-section">
-    <h1>High in Protein or High in Marketing?</h1>
-    <p>Is that food high in protein, or just marketed that way?</p>
-    <p>I'm a marketer who spent 15 years writing convincing ads. Then I lost 30+ lbs leaving the marketing behind and looking at the truth underneath all the hype.</p>
-	<p>This calculator helps you see through the hype, too.</p>
-	<p> <a href="https://x.com/bradenrrussom" target="_blank">Follow me on X</a> if you’re done with all the hype around weight loss and ready to find what <em>actually</em> works.</p>    
-    <a href="https://x.com/bradenrrussom" target="_blank" class="cta-button">See Through the Hype 👉</a>
-</div>
-""", unsafe_allow_html=True)
+# Header with branding - Left column text, right column photo
+header_col1, header_col2 = st.columns([2, 1])
 
-# Author bio with photo
-if Path('bradenrussomheadshot.jpg').exists():
+with header_col1:
     st.markdown("""
-    <div class="author-bio">
-        <img src="bradenrussomheadshot.jpg" alt="Braden Russom" class="author-photo">
-        <div class="author-info">
-            <p><strong>Built by Braden Russom</strong></p>
-            <p><a href="https://x.com/bradenrrussom" target="_blank">@bradenrrussom</a></p>
-        </div>
+    <div class="header-section">
+        <h1>Get the Truth about High Protein Foods</h1>
+        <p>Use this calculator to find out whether a food is actually high in protein or just marketed that way.</p>
+        <p>By the way, I'm a marketer who lost 30+ lbs on my own terms. I teach people how to see through ads, track what works, and lose weight your way.</p>
+        <p>And if you like this calculator, you'll love my other stuff. Follow me on X to graduate from weight loss programs forever.</p>
+        <a href="https://x.com/bradenrrussom" target="_blank" class="cta-button">Graduate Forever  👉</a>
     </div>
     """, unsafe_allow_html=True)
+
+with header_col2:
+    if Path('bradenrussomheadshot.jpg').exists():
+        st.image('bradenrussomheadshot.jpg', use_container_width=False, width=120)
+        st.markdown("""
+        <div class="author-info">
+            <p><strong>Braden Russom</strong></p>
+            <p><a href="https://x.com/bradenrrussom" target="_blank">@bradenrrussom</a></p>
+        </div>
+        """, unsafe_allow_html=True)
+    else:
+        st.markdown("""
+        <div style="padding: 1rem; background-color: #fff5f5; border-radius: 4px; border-left: 4px solid #c41e3a;">
+            <p style="color: #c41e3a; margin: 0; font-size: 0.85rem;"><strong>⚠️ Photo missing</strong><br>Add bradenrussomheadshot.jpg to your repo</p>
+        </div>
+        """, unsafe_allow_html=True)
 
 # Input section
 st.markdown("<div class='input-section'>", unsafe_allow_html=True)
@@ -339,3 +348,9 @@ st.markdown("""
 # Display nutrition label image if it exists
 if Path('nutrition_label_numbers.jpg').exists():
     st.image('nutrition_label_numbers.jpg', use_container_width=True)
+else:
+    st.markdown("""
+    <div style="padding: 1rem; background-color: #fff5f5; border-radius: 4px; border-left: 4px solid #c41e3a; margin-top: 1rem;">
+        <p style="color: #c41e3a; margin: 0; font-size: 0.85rem;"><strong>⚠️ Image missing</strong><br>Add nutrition_label_numbers.jpg to your repo</p>
+    </div>
+    """, unsafe_allow_html=True)

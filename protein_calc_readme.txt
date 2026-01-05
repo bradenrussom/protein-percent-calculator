@@ -202,7 +202,8 @@ The app uses:
 The app uses two image files that should be in your GitHub repository:
 
 1. **bradenrussomheadshot.jpg** - Your headshot photo
-   - Appears in the credibility section below the header
+   - Appears on the right side of the header
+   - Small on mobile so users don't have to scroll past it
    - Recommended size: 600x600px or larger
    - Should be a professional headshot
 
@@ -211,7 +212,45 @@ The app uses two image files that should be in your GitHub repository:
    - Should clearly show where calories and protein are located
    - Can be any reasonable size
 
-If either image is missing, the app will still work but won't display that image.
+### How to Fix Broken Images
+
+If images aren't loading, you need to use the raw GitHub URLs instead of filenames:
+
+#### Option 1: Find the Raw URL (Easiest)
+1. Go to your GitHub repository
+2. Click on the image file (e.g., `bradenrussomheadshot.jpg`)
+3. Click the **Raw** button (top right)
+4. Copy the URL from the address bar
+5. In `app.py`, replace the filename with this full URL
+
+#### Option 2: Construct the URL Manually
+Replace `YOUR_USERNAME` and `YOUR_REPO_NAME` with your actual info:
+
+For your headshot:
+```
+https://raw.githubusercontent.com/YOUR_USERNAME/protein-calculator/main/bradenrussomheadshot.jpg
+```
+
+For the nutrition label:
+```
+https://raw.githubusercontent.com/YOUR_USERNAME/protein-calculator/main/nutrition_label_numbers.jpg
+```
+
+#### Option 3: Update app.py Code
+Find these lines in `app.py`:
+```python
+if Path('bradenrussomheadshot.jpg').exists():
+    st.image('bradenrussomheadshot.jpg', use_container_width=False, width=120)
+```
+
+Replace with the full URL:
+```python
+st.image('https://raw.githubusercontent.com/YOUR_USERNAME/protein-calculator/main/bradenrussomheadshot.jpg', use_container_width=False, width=120)
+```
+
+Do the same for the nutrition label image.
+
+If either image is missing or the URL is broken, the app will display a warning message instead of the image.
 
 ## Modular Code Structure
 

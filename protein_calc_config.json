@@ -1,0 +1,24 @@
+{
+  "thresholds": [
+    {
+      "min": 70,
+      "label": "Yes"
+    },
+    {
+      "min": 50,
+      "label": "Sorta"
+    },
+    {
+      "min": 25,
+      "label": "No"
+    },
+    {
+      "min": 0,
+      "label": "Hell No"
+    }
+  ],
+  "validation": {
+    "max_calories": 5000,
+    "max_protein": 300
+  }
+}
